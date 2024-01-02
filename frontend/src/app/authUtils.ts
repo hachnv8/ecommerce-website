@@ -33,17 +33,17 @@ class AuthBackend {
   //   }
 
   getAuthenticatedUser = () => {
-    if (!sessionStorage.getItem("user")) {
+    if (!localStorage.getItem("user")) {
       return null;
     }
-    return JSON.parse(sessionStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem("user"));
   };
 
-  getToken = () => {
-    if (!sessionStorage.getItem("token")) {
+  getAuthenticatedToken = () => {
+    if (!localStorage.getItem("token")) {
       return null;
     }
-    return JSON.parse(sessionStorage.getItem("token"));
+    return localStorage.getItem("token");
   };
 }
 

@@ -9,6 +9,7 @@ import { ConfirmmailComponent } from './confirmmail/confirmmail.component';
 import { VerificationComponent } from './verification/verification.component';
 import { SteptwoverificationComponent } from './steptwoverification/steptwoverification.component';
 import { ComingsoonComponent } from './comingsoon/comingsoon.component';
+import { Page403Component } from './page403/page403.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
     {
         path: '404',
         component: Page404Component
+    },
+    {
+        path: '403',
+        component: Page403Component
     },
     {
         path: '500',

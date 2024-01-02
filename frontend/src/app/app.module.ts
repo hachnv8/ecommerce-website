@@ -19,7 +19,6 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { EffectsModule } from "@ngrx/effects";
 // Page Route
 import { ExtrapagesModule } from "./extrapages/extrapages.module";
-import { LayoutsModule } from "./layouts/layouts.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { initAuthBackend } from "./authUtils";
@@ -52,6 +51,7 @@ import { tasklistEffects } from "./store/Tasks/tasks.effect";
 import { OrdersEffects } from "./store/Crypto/crypto.effects";
 import { CustomerEffects } from "./store/customer/customer.effects";
 import { MailEffects } from "./store/Email/email.effects";
+import { AdminLayoutsModule } from "./admin/layouts/layouts.module";
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -70,7 +70,7 @@ export function createTranslateLoader(http: HttpClient): any {
         deps: [HttpClient],
       },
     }),
-    LayoutsModule,
+    AdminLayoutsModule,
     AppRoutingModule,
     ExtrapagesModule,
     AccordionModule.forRoot(),

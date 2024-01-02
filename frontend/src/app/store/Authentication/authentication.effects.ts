@@ -34,9 +34,15 @@ export class AuthenticationEffects {
         return this.AuthenticationService.login(email, password).pipe(
           map((userToken: UserToken) => {
             if(userToken) {
-              localStorage.setItem('user', JSON.stringify(userToken.user));
+              const user = userToken.user;
+              localStorage.setItem('user', JSON.stringify(user));
               localStorage.setItem('token', userToken.token);
-              this.router.navigate(['/']);
+              if(user.role === 'ADMIN'){
+                this.router.navigate(['/admin']);
+              } else {
+                this.router.navigate(['/']);
+              }
+              
           }
           return loginSuccess({ userToken });
         }))

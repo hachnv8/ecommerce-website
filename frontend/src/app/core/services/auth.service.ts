@@ -25,7 +25,7 @@ export class AuthenticationService {
      * Returns the current token
      */
     public currentToken(): String {
-        return getAuthBackend().getAuthenticatedUser();
+        return getAuthBackend().getAuthenticatedToken();
     }
 
 
