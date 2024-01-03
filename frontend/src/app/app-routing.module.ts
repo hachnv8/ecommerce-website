@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from "./core/guards/auth.guard";
-import { Page404Component } from "./extrapages/page404/page404.component";
-import { LayoutComponent } from "./admin/layouts/layout.component";
+import { AuthGuard } from './core/guards/auth.guard';
+import { Page404Component } from './extrapages/page404/page404.component';
+import { LayoutComponent } from './admin/layouts/layout.component';
 
 const routes: Routes = [
   {
@@ -32,7 +32,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "top" })],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+
+export class AppRoutingModule { }

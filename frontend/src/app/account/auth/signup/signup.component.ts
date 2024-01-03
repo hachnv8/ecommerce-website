@@ -6,8 +6,6 @@ import { AuthenticationService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
 import { first } from 'rxjs/operators';
 import { UserProfileService } from '../../../core/services/user.service';
-import { Store } from '@ngrx/store';
-import { Register } from 'src/app/store/Authentication/authentication.actions';
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +24,7 @@ export class SignupComponent implements OnInit {
 
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: UntypedFormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private userService: UserProfileService, public store: Store) { }
+    private userService: UserProfileService) { }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -46,12 +44,19 @@ export class SignupComponent implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
+    if (this.signupForm.invalid) {
+      return;
+    } else {
+      this.authenticationService.register(this.f.email.value, this.f.password.value).then((res: any) => {
+        this.successmsg = true;
+        if (this.successmsg) {
+          this.router.navigate(['/dashboard']);
+        }
+      })
+        .catch(error => {
+          this.error = error ? error : '';
+        });
 
-    const email = this.f['email'].value;
-    const name = this.f['username'].value;
-    const password = this.f['password'].value;
-
-    //Dispatch Action
-    this.store.dispatch(Register({ email: email, username: name, password: password }));
+    }
   }
 }

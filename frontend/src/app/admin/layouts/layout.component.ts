@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
-import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+
+import {
+  LAYOUT_VERTICAL, LAYOUT_WIDTH, TOPBAR, LAYOUT_MODE, SIDEBAR_TYPE
+} from './layouts.model';
 import { EventService } from 'src/app/core/services/event.service';
-import { RootReducerState } from 'src/app/store';
-import { LayoutState } from 'src/app/store/layouts/layouts.reducer';
 
 @Component({
   selector: 'app-layout',
@@ -20,97 +20,140 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   topbar: string;
   mode: string;
   sidebartype: string;
-  layoutData: LayoutState;
-  dataLayout$: Observable<string>;
 
-  constructor(private eventService: EventService, private store: Store<{ layout: { DATA_LAYOUT: string } }>, private stores: Store<RootReducerState>) {
-    this.dataLayout$ = store.select('layout').pipe(map(data => data.DATA_LAYOUT));
-  }
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
     // default settings
-    this.stores.select('layout').subscribe((data) => {
-      document.body.setAttribute('data-bs-theme', data.LAYOUT_MODE);
-      document.body.setAttribute('data-layout-size', data.LAYOUT_WIDTH);
-      document.body.setAttribute('data-sidebar', data.SIDEBAR_MODE);
-      document.body.setAttribute('data-topbar', data.TOPBAR_TYPE);
+    this.layoutType = LAYOUT_VERTICAL;
+    this.layoutwidth = LAYOUT_WIDTH;
+    this.topbar = TOPBAR;
+    this.mode = LAYOUT_MODE;
+    this.sidebartype = SIDEBAR_TYPE;
 
-      switch (data.SIDEBAR_MODE) {
-        case "light":
-          document.body.setAttribute('data-sidebar', 'light');
-          document.body.setAttribute('data-topbar', 'dark');
-          document.body.removeAttribute('data-sidebar-size');
-          document.body.removeAttribute('data-layout-size');
-          document.body.removeAttribute('data-keep-enlarged');
-          document.body.classList.remove('vertical-collpsed');
-          document.body.removeAttribute('data-layout-scrollable');
-          break;
-        case "compact":
-          document.body.setAttribute('data-sidebar-size', 'small');
-          document.body.setAttribute('data-sidebar', 'dark');
-          document.body.removeAttribute('data-topbar');
-          document.body.removeAttribute('data-layout-size');
-          document.body.removeAttribute('data-keep-enlarged');
-          document.body.classList.remove('sidebar-enable');
-          document.body.classList.remove('vertical-collpsed');
-          document.body.removeAttribute('data-layout-scrollable');
-          break;
-        case "dark":
-          document.body.setAttribute('data-sidebar', 'dark');
-          document.body.removeAttribute('data-topbar');
-          document.body.removeAttribute('data-layout-size');
-          document.body.removeAttribute('data-keep-enlarged');
-          document.body.removeAttribute('data-sidebar-size');
-          document.body.classList.remove('sidebar-enable');
-          document.body.classList.remove('vertical-collpsed');
-          document.body.removeAttribute('data-layout-scrollable');
-          break;
-        case "icon":
-          document.body.classList.add('vertical-collpsed');
-          document.body.setAttribute('data-sidebar', 'dark');
-          document.body.removeAttribute('data-layout-size');
-          document.body.setAttribute('data-keep-enlarged', "true");
-          document.body.removeAttribute('data-topbar');
-          document.body.removeAttribute('data-layout-scrollable');
-          break;
-        case "colored":
-          document.body.classList.remove('sidebar-enable');
-          document.body.classList.remove('vertical-collpsed');
-          document.body.setAttribute('data-sidebar', 'colored');
-          document.body.removeAttribute('data-layout-size');
-          document.body.removeAttribute('data-keep-enlarged');
-          document.body.removeAttribute('data-topbar');
-          document.body.removeAttribute('data-layout-scrollable');
-          document.body.removeAttribute('data-sidebar-size');
-          break;
-        default:
-          document.body.setAttribute('data-sidebar', 'dark');
-          break;
-      }
-      switch (data.LAYOUT_WIDTH) {
-        case "fluid":
-          document.body.setAttribute("data-layout-size", "fluid");
-          document.body.classList.remove("vertical-collpsed");
-          document.body.removeAttribute("data-layout-scrollable");
-          break;
-        case "boxed":
-          document.body.setAttribute("data-layout-size", "boxed");
-          document.body.classList.add("vertical-collpsed");
-          document.body.removeAttribute("data-layout-scrollable");
-          break;
-        case "scrollable":
-          document.body.removeAttribute("data-layout-size");
-          document.body.setAttribute("data-layout-scrollable", "true");
-          document.body.setAttribute("data-layout-size", "fluid");
-          document.body.classList.remove("right-bar-enabled", "vertical-collpsed");
-        default:
-          document.body.setAttribute("data-layout-size", "fluid");
-          break;
-      }
+    // document.body.setAttribute('data-bs-theme', this.mode);
 
-    })
+    // listen to event and change the layout, theme, etc
+    this.eventService.subscribe('changeLayout', (layout) => {
+      this.layoutType = layout;
+    });
+
+    this.LayoutWidth(this.layoutwidth);
+
+    this.eventService.subscribe('changeWidth', (width) => {
+      this.layoutwidth = width;
+      this.LayoutWidth(this.layoutwidth);
+    });
+
+    // listen to event and change the layout, theme, etc
+    this.eventService.subscribe('changeSidebartype', (layout) => {
+      this.sidebartype = layout;
+      this.changeSidebar(this.sidebartype);
+    });
+
+    // Change Mode
+    this.eventService.subscribe('changeMode', (mode) => {
+      this.mode = mode;
+      this.changeMode(this.mode);
+    });
+
+    this.changeSidebar(this.sidebartype);
+    this.changeMode(this.mode);
   }
+
+  // Theme Drk Light Mode
+  changeMode(value) {    
+    switch (value) {
+      case "light":
+        document.body.setAttribute('data-bs-theme', 'light');
+        break;
+      case "dark":
+        document.body.setAttribute('data-bs-theme', 'dark');
+        break;
+      default:
+        document.body.setAttribute('data-bs-theme', 'light');
+        break;
+    }
+  }
+
+  changeSidebar(value) {
+    switch (value) {
+      case "light":
+        document.body.setAttribute('data-sidebar', 'light');
+        document.body.setAttribute('data-topbar', 'dark');
+        document.body.removeAttribute('data-sidebar-size');
+        document.body.removeAttribute('data-layout-size');
+        document.body.removeAttribute('data-keep-enlarged');
+        document.body.classList.remove('vertical-collpsed');
+        document.body.removeAttribute('data-layout-scrollable');
+        break;
+      case "compact":
+        document.body.setAttribute('data-sidebar-size', 'small');
+        document.body.setAttribute('data-sidebar', 'dark');
+        document.body.removeAttribute('data-topbar');
+        document.body.removeAttribute('data-layout-size');
+        document.body.removeAttribute('data-keep-enlarged');
+        document.body.classList.remove('sidebar-enable');
+        document.body.classList.remove('vertical-collpsed');
+        document.body.removeAttribute('data-layout-scrollable');
+        break;
+      case "dark":
+        document.body.setAttribute('data-sidebar', 'dark');
+        document.body.removeAttribute('data-topbar');
+        document.body.removeAttribute('data-layout-size');
+        document.body.removeAttribute('data-keep-enlarged');
+        document.body.removeAttribute('data-sidebar-size');
+        document.body.classList.remove('sidebar-enable');
+        document.body.classList.remove('vertical-collpsed');
+        document.body.removeAttribute('data-layout-scrollable');
+        break;
+      case "icon":
+        document.body.classList.add('vertical-collpsed');
+        document.body.setAttribute('data-sidebar', 'dark');
+        document.body.removeAttribute('data-layout-size');
+        document.body.setAttribute('data-keep-enlarged',"true");
+        document.body.removeAttribute('data-topbar');
+        document.body.removeAttribute('data-layout-scrollable');
+        break;
+      case "colored":
+        document.body.classList.remove('sidebar-enable');
+        document.body.classList.remove('vertical-collpsed');
+        document.body.setAttribute('data-sidebar', 'colored');
+        document.body.removeAttribute('data-layout-size');
+        document.body.removeAttribute('data-keep-enlarged');
+        document.body.removeAttribute('data-topbar');
+        document.body.removeAttribute('data-layout-scrollable');
+        document.body.removeAttribute('data-sidebar-size');
+        break;
+      default:
+        document.body.setAttribute('data-sidebar', 'dark');
+        break;
+    }
+  }
+
   ngAfterViewInit() {
   }
 
+  LayoutWidth(width: string) {
+    switch (width) {
+      case "fluid":
+        document.body.setAttribute("data-layout-size", "fluid");
+        document.body.classList.remove("vertical-collpsed");
+        document.body.removeAttribute("data-layout-scrollable");
+        break;
+      case "boxed":
+        document.body.setAttribute("data-layout-size", "boxed");
+        document.body.classList.add("vertical-collpsed");
+        document.body.removeAttribute("data-layout-scrollable");
+        break;
+      case "scrollable":
+        document.body.removeAttribute("data-layout-size");
+        document.body.setAttribute("data-layout-scrollable", "true");
+        document.body.setAttribute("data-layout-size", "fluid");
+        document.body.classList.remove("right-bar-enabled", "vertical-collpsed");
+      default:
+        document.body.setAttribute("data-layout-size", "fluid");
+        break;
+    }
+  }
 }

@@ -1,33 +1,23 @@
-import { Injectable, inject } from "@angular/core";
-import {
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  CanActivateFn,
-} from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-// Auth Services
-import { AuthenticationService } from "../services/auth.service";
+import { AuthenticationService } from '../services/auth.service';
 
-@Injectable({ providedIn: "root" })
-class PermissionsService {
-  constructor(
-    private authenticationService: AuthenticationService  ) {}
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    const currentUser = this.authenticationService.currentUser();
-    if (currentUser) {
-      // logged in so return true
-      return true;
+
+@Injectable({ providedIn: 'root' })
+export class AuthGuard {
+    constructor(
+        private router: Router,
+        private authenticationService: AuthenticationService    ) { }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const currentUser = this.authenticationService.currentUser();
+        if (currentUser) {
+            // logged in so return true
+            return true;
+        }
+        // not logged in so redirect to login page with the return url
+        this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url } });
+        return false;
     }
-    return false;
-  }
 }
-
-export const AuthGuard: CanActivateFn = (
-  next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): boolean => {
-  return inject(PermissionsService).canActivate(next, state);
-};

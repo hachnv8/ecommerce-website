@@ -1,20 +1,16 @@
 <!-- breadcrumb item -->
 <div class="row">
   <div class="col-12">
-    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+    <div class="page-title-box d-flex align-items-center justify-content-between">
       <h4 class="mb-0 font-size-18">{{ title }}</h4>
       <div class="page-title-right">
         <ol class="breadcrumb m-0">
-          @for(item of breadcrumbItems;track $index){
-          <ng-container>
-            @if(item.active){
-            <li class="breadcrumb-item active">{{ item.label }}
+          <ng-container *ngFor="let item of breadcrumbItems">
+            <li class="breadcrumb-item" *ngIf="!item.active"><a href="javascript: void(0);">{{ item.label }}</a>
             </li>
-            }@else{
-            <li class="breadcrumb-item"><a href="javascript: void(0);">{{ item.label }}</a>
-            </li>}
+            <li class="breadcrumb-item active" *ngIf="item.active">{{ item.label }}
+            </li>
           </ng-container>
-          }
         </ol>
       </div>
     </div>

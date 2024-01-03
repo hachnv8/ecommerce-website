@@ -1,40 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, QueryList, ViewChildren, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
-import { Store } from '@ngrx/store';
-import { addJoblist, fetchJoblistData, updateJoblist } from 'src/app/store/Job/job.action';
-import { selectData } from 'src/app/store/Job/job-selector';
+
+import { jobListModel } from './list.model';
+import { JobListService } from './list.service';
+import { NgbdJobListSortableHeader, SortEvent } from './list-sortable.directive';
+import { JobListdata } from './data';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  providers: [JobListService, DecimalPipe]
 })
 
 /**
  * List Component
  */
 export class ListComponent implements OnInit {
-  searchTerm: any;
+
   modalRef?: BsModalRef;
-  page: any = 1;
+
   // bread crumb items
   breadCrumbItems: Array<{}>;
   jobListForm!: UntypedFormGroup;
   submitted: boolean = false;
-  endItem: any;
-  term: any
+
   // Table data
   content?: any;
   lists?: any;
+  jobList!: Observable<jobListModel[]>;
   total: Observable<number>;
+  @ViewChildren(NgbdJobListSortableHeader) headers!: QueryList<NgbdJobListSortableHeader>;
   currentPage: any;
-  joblist: any;
-  searchResults: any;
-  constructor(private modalService: BsModalService, private formBuilder: UntypedFormBuilder, public store: Store) {
+
+  constructor(private modalService: BsModalService, public service: JobListService, private formBuilder: UntypedFormBuilder) {
+    this.jobList = service.jobList$;
+    this.total = service.total$;
   }
 
   ngOnInit(): void {
@@ -44,7 +50,8 @@ export class ListComponent implements OnInit {
      * Form Validation
      */
     this.jobListForm = this.formBuilder.group({
-      id: [''],
+      id: "11",
+      ids: [''],
       title: ['', [Validators.required]],
       name: ['', [Validators.required]],
       location: ['', [Validators.required]],
@@ -54,12 +61,12 @@ export class ListComponent implements OnInit {
       status: ['', [Validators.required]]
     });
 
-    // store data
-    this.store.dispatch(fetchJoblistData());
-    this.store.select(selectData).subscribe(data => {
-      this.lists = data
-      this.joblist = data;
-      this.lists = this.joblist.slice(0, 8)
+    /**
+    * fetches data
+    */
+    this.jobList.subscribe(x => {
+      this.content = this.lists;
+      this.lists = Object.assign([], x);
     });
   }
 
@@ -137,22 +144,42 @@ export class ListComponent implements OnInit {
   */
   saveUser() {
     if (this.jobListForm.valid) {
-      if (this.jobListForm.get('id')?.value) {
-        const updatedData = this.jobListForm.value;
-        this.store.dispatch(updateJoblist({ updatedData }));
+      if (this.jobListForm.get('ids')?.value) {
+        this.service.products = JobListdata.map((data: { id: any; }) => data.id === this.jobListForm.get('ids')?.value ? { ...data, ...this.jobListForm.value } : data)
       } else {
-        this.jobListForm.controls['id'].setValue(this.joblist.length + 1)
-        const newData = this.jobListForm.value
-        this.store.dispatch(addJoblist({ newData }))
+        const title = this.jobListForm.get('title')?.value;
+        const name = this.jobListForm.get('name')?.value;
+        const location = this.jobListForm.get('location')?.value;
+        const experience = this.jobListForm.get('experience')?.value;
+        const position = this.jobListForm.get('position')?.value;
+        const type = this.jobListForm.get('type')?.value;
+        const posted_date = "02 June 2021";
+        const last_date = "25 June 2021";
+        const status = this.jobListForm.get('status')?.value;
+        JobListdata.push({
+          id: this.lists.length + 1,
+          title,
+          name,
+          location,
+          experience,
+          position,
+          type,
+          type_color: "success",
+          posted_date,
+          last_date,
+          status,
+          status_color: "success"
+        });
       }
     }
-    this.modalService?.hide()
+    this.modalService.hide();
     setTimeout(() => {
       this.jobListForm.reset();
-    }, 1000);
+    }, 2000);
+    this.submitted = true
   }
 
-  /**}
+  /**
    * Open Edit modal
    * @param content modal content
    */
@@ -163,7 +190,6 @@ export class ListComponent implements OnInit {
     modelTitle.innerHTML = 'Edit Order';
     var updateBtn = document.getElementById('add-btn') as HTMLAreaElement;
     updateBtn.innerHTML = "Update";
-
     var listData = this.lists.filter((data: { id: any; }) => data.id === id);
     this.jobListForm.controls['title'].setValue(listData[0].title);
     this.jobListForm.controls['name'].setValue(listData[0].name);
@@ -172,59 +198,11 @@ export class ListComponent implements OnInit {
     this.jobListForm.controls['position'].setValue(listData[0].position);
     this.jobListForm.controls['type'].setValue(listData[0].type);
     this.jobListForm.controls['status'].setValue(listData[0].status);
-    this.jobListForm.controls['id'].setValue(listData[0].id);
+    this.jobListForm.controls['ids'].setValue(listData[0].id);
   }
 
-  // Search Data
-  performSearch(): void {
-    this.searchResults = this.joblist.filter((item: any) => {
-      return item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-        || item.status.toLowerCase().includes(this.searchTerm.toLowerCase())
-        || item.type.toLowerCase().includes(this.searchTerm.toLowerCase())
-        || item.date.toLowerCase().includes(this.searchTerm.toLowerCase())
-
-    })
-    this.lists = this.searchResults.slice(0, 8)
-  }
-  // pagination
   pageChanged(event: any) {
-    const startItem = (event.page - 1) * event.itemsPerPage;
-    this.endItem = event.page * event.itemsPerPage;
-    this.lists = this.joblist.slice(startItem, this.endItem)
+    this.currentPage = event.page;
   }
 
-  // fiter job
-  searchJob() {
-    if (this.term) {
-      this.lists = this.joblist.filter((data: any) => {
-        return data.title.toLowerCase().includes(this.term.toLowerCase())
-      })
-    } else {
-      this.lists = this.joblist
-    }
-
-  }
-
-  selectstatus() {
-    var status = (document.getElementById('idStatus') as HTMLInputElement).value;
-    if (status) {
-      this.lists = this.joblist.filter((es: any) => {
-        return es.status === status
-      })
-    } else {
-      this.lists = this.joblist
-    }
-
-  }
-
-  selectType() {
-    var type = (document.getElementById('idType') as HTMLInputElement).value;
-    if (type) {
-      this.lists = this.joblist.filter((es: any) => {
-        return es.type === type
-      })
-    } else {
-      this.lists = this.joblist
-    }
-  }
 }

@@ -1,40 +1,29 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { NgOtpInputModule } from "ng-otp-input";
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgOtpInputModule } from 'ng-otp-input';
 
-import { ExtrapagesRoutingModule } from "./extrapages-routing.module";
+import { ExtrapagesRoutingModule } from './extrapages-routing.module';
 
-import { MaintenanceComponent } from "./maintenance/maintenance.component";
-import { Page404Component } from "./page404/page404.component";
-import { Page500Component } from "./page500/page500.component";
-import { LockscreenComponent } from "./lockscreen/lockscreen.component";
-import { ConfirmmailComponent } from "./confirmmail/confirmmail.component";
-import { VerificationComponent } from "./verification/verification.component";
-import { SteptwoverificationComponent } from "./steptwoverification/steptwoverification.component";
-import { ComingsoonComponent } from "./comingsoon/comingsoon.component";
-// Swiper Slider
-import { SlickCarouselModule } from "ngx-slick-carousel";
-import { Page403Component } from "./page403/page403.component";
+import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { Page404Component } from './page404/page404.component';
+import { Page500Component } from './page500/page500.component';
+import { LockscreenComponent } from './lockscreen/lockscreen.component';
+import { ConfirmmailComponent } from './confirmmail/confirmmail.component';
+import { VerificationComponent } from './verification/verification.component';
+import { SteptwoverificationComponent } from './steptwoverification/steptwoverification.component';
+import { ComingsoonComponent } from './comingsoon/comingsoon.component';
+import { Page403Component } from './page403/page403.component';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [
-    MaintenanceComponent,
-    Page404Component,
-    Page403Component,
-    Page500Component,
-    LockscreenComponent,
-    ConfirmmailComponent,
-    VerificationComponent,
-    SteptwoverificationComponent,
-    ComingsoonComponent,
-  ],
+  declarations: [MaintenanceComponent, Page404Component, Page403Component, Page500Component, LockscreenComponent, ConfirmmailComponent, VerificationComponent, SteptwoverificationComponent, ComingsoonComponent],
   imports: [
     CommonModule,
+    CarouselModule,
     ExtrapagesRoutingModule,
-    NgOtpInputModule,
-    SlickCarouselModule,
-  ],
+    NgOtpInputModule
+  ]
 })
-export class ExtrapagesModule {}
+export class ExtrapagesModule { }

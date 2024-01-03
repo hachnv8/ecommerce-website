@@ -12,7 +12,6 @@ import { FooterComponent } from './footer/footer.component';
 import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
 import { VerticalComponent } from './vertical/vertical.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { UIModule } from 'src/app/shared/ui/ui.module';
 import { LanguageService } from 'src/app/core/services/language.service';
 
 @NgModule({
@@ -23,9 +22,8 @@ import { LanguageService } from 'src/app/core/services/language.service';
     TranslateModule,
     RouterModule,
     BsDropdownModule.forRoot(),
-    UIModule,
     SimplebarAngularModule
   ],
   providers: [LanguageService]
 })
-export class AdminLayoutsModule { }
+export class LayoutsModule { }

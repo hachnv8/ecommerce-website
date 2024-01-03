@@ -49,20 +49,3 @@ form {
         }
     }
 }
-
-.ck-reset,.ck-input{
-    background-color: var(--#{$prefix}secondary-bg) !important;
-    border-color: var(--#{$prefix}border-color) !important;
-}
-
-.ck-link-form{
-    background-color: var(--#{$prefix}secondary-bg) !important;
-    border-color: var(--#{$prefix}border-color) !important;
-}
-.ck.ck-balloon-panel{
-    border-color: var(--#{$prefix}border-color) !important;
-}
-
-.ck.ck-balloon-panel[class*=arrow_n]:after{
-    border-color: var(--#{$prefix}border-color) !important;
-}

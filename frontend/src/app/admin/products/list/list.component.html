@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="col-12">
-      <div ngClass="card">
+      <div class="card">
         <div class="card-body border-bottom">
           <div class="d-flex align-items-center">
             <h5 class="mb-0 card-title flex-grow-1">Jobs Lists</h5>
@@ -24,10 +24,10 @@
         <div class="card-body border-bottom">
           <div class="row g-3">
             <div class="col-xxl-4 col-lg-6">
-              <input type="search" class="form-control" id="searchInput" placeholder="Search for ..." [(ngModel)]="term" (ngModelChange)="searchJob()">
+              <input type="search" class="form-control" id="searchInput" placeholder="Search for ..." [(ngModel)]="service.searchTerm">
             </div>
             <div class="col-xxl-2 col-lg-6">
-              <select class="form-select" id="idStatus" aria-label="Default select example" (click)="selectstatus()">
+              <select class="form-select" [(ngModel)]="service.status" id="idStatus" aria-label="Default select example">
                 <option value="">Select Status</option>
                 <option value="Active">Active</option>
                 <option value="New">New</option>
@@ -35,7 +35,7 @@
               </select>
             </div>
             <div class="col-xxl-2 col-lg-4">
-              <select class="form-select" id="idType" aria-label="Default select example" (click)="selectType()">
+              <select class="form-select" [(ngModel)]="service.type" id="idType" aria-label="Default select example">
                 <option value="">Select Type</option>
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
@@ -74,8 +74,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for(data of lists;track $index){
-                <tr>
+                <tr *ngFor="let data of lists">
                   <th scope="row">{{data.id}}</th>
                   <td>{{data.title}}</td>
                   <td>{{data.name}}</td>
@@ -83,8 +82,8 @@
                   <td>{{data.experience}}</td>
                   <td>{{data.position}}</td>
                   <td><span class="badge badge-soft-{{data.type_color}}" [ngClass]="{'badge-soft-success': data.type === 'Full Time','badge-soft-danger': data.type === 'Part Time','badge-soft-info': data.type === 'Freelance','badge-soft-warning': data.type === 'Internship'}">{{data.type}}</span></td>
-                  <td>02 Nov 2023</td>
-                  <td> 25 Nov 2023</td>
+                  <td>{{data.posted_date}}</td>
+                  <td>{{data.last_date}}</td>
                   <td><span class="badge" [ngClass]="{ 'bg-success': data.status === 'Active', 'bg-info': data.status === 'New', 'bg-danger': data.status === 'Close'}">{{data.status}}</span></td>
                   <td>
                     <ul class="list-unstyled hstack gap-1 mb-0">
@@ -99,24 +98,23 @@
                       </li>
                     </ul>
                   </td>
-                </tr>}
+                </tr>
               </tbody>
             </table>
           </div>
-          @if(joblist?.length > 0){
           <div class="row justify-content-between align-items-center">
             <div class="col-auto me-auto">
-              <p class="text-muted mb-0">Showing <b>{{lists?.length}}</b> of <b>{{joblist?.length}}</b> entries</p>
+              <p class="text-muted mb-0">Showing <b>{{service.startIndex}}</b> to <b>{{service.endIndex}}</b> of <b>{{service.totalRecords}}</b> entries</p>
             </div>
             <div class="col-auto">
               <div class="text-md-right float-md-end pagination-rounded">
                 <ul class="pagination pagination-rounded justify-content-end mb-2">
-                  <pagination [totalItems]="joblist?.length" [itemsPerPage]="8" (pageChanged)="pageChanged($event)"></pagination>
+                  <pagination [totalItems]="(total | async)!" [(ngModel)]="service.page" [itemsPerPage]="service.pageSize" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
                 </ul>
               </div>
             </div>
             <!--end col-->
-          </div>}
+          </div>
           <!--end row-->
         </div>
       </div>
@@ -212,57 +210,45 @@
   </div>
   <form (ngSubmit)="saveUser()" [formGroup]="jobListForm">
     <div class="modal-body">
-      <input type="hidden" name="id" value="" formControlName="id" />
+      <input type="hidden" name="id" value="" formControlName="ids" />
       <div class="mb-3">
         <label for="customername-field" class="form-label">Jobs Title</label>
         <input type="text" id="customername-field" class="form-control" placeholder="Enter Name" required formControlName="title" [ngClass]="{ 'is-invalid': submitted && form['title'].errors }" />
-        @if(submitted && form['title'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['title'].errors['required']){
-          <div>Jobs Title is required</div>
-          }
+        <div *ngIf="submitted && form['title'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['title'].errors['required']">Jobs Title is required</div>
         </div>
-        }
       </div>
 
       <div class="mb-3">
         <label for="customername-field" class="form-label">Company Name</label>
         <input type="text" id="customername-field" class="form-control" placeholder="Enter Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
-        @if(submitted && form['name'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['name'].errors['required']){
-          <div>Company Name is required</div>}
-        </div>}
+        <div *ngIf="submitted && form['name'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['name'].errors['required']">Company Name is required</div>
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="customername-field" class="form-label">Location</label>
         <input type="text" id="customername-field" class="form-control" placeholder="Enter Location" required formControlName="location" [ngClass]="{ 'is-invalid': submitted && form['location'].errors }" />
-        @if(submitted && form['location'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['location'].errors['required']){
-          <div>Location is required</div>}
-        </div>}
+        <div *ngIf="submitted && form['location'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['location'].errors['required']">Location is required</div>
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="customername-field" class="form-label">Experience</label>
         <input type="text" id="customername-field" class="form-control" placeholder="Enter Experience" required formControlName="experience" [ngClass]="{ 'is-invalid': submitted && form['experience'].errors }" />
-        @if(submitted && form['experience'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['experience'].errors['required']){
-          <div>Experience is required</div>}
-        </div>}
+        <div *ngIf="submitted && form['experience'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['experience'].errors['required']">Experience is required</div>
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="customername-field" class="form-label">Position</label>
         <input type="text" id="customername-field" class="form-control" placeholder="Enter Position" required formControlName="position" [ngClass]="{ 'is-invalid': submitted && form['position'].errors }" />
-        @if(submitted && form['position'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['position'].errors['required']){
-          <div>Position is required</div>}
-        </div>}
+        <div *ngIf="submitted && form['position'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['position'].errors['required']">Position is required</div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -272,12 +258,9 @@
           <option value="Full Time">Full Time</option>
           <option value="Part Time">Part Time</option>
         </select>
-        @if(submitted && form['type'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['type'].errors['required']){
-          <div>Type is required</div>
-          }
-        </div>}
+        <div *ngIf="submitted && form['type'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['type'].errors['required']">Type is required</div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -288,17 +271,15 @@
           <option value="New">New</option>
           <option value="Close">Close</option>
         </select>
-        @if(submitted && form['status'].errors){
-        <div class="invalid-feedback" align="left">
-          @if(form['status'].errors['required']){
-          <div>Status is required</div>}
-        </div>}
+        <div *ngIf="submitted && form['status'].errors" class="invalid-feedback" align="left">
+          <div *ngIf="form['status'].errors['required']">Status is required</div>
+        </div>
       </div>
 
     </div>
     <div class="modal-footer">
       <div class="hstack gap-2 justify-content-end">
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)=" modalRef?.hide()">Close</button>
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">Close</button>
         <button type="submit" class="btn btn-success" id="add-btn">Add Order</button>
       </div>
     </div>

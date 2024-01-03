@@ -1,6 +1,5 @@
-@if(loading){
-<div id="preloader">
-    <div id="status">
+<div id="preloader" *ngIf="loading">
+    <div id="status" >
         <div class="spinner-chase">
             <div class="chase-dot"></div>
             <div class="chase-dot"></div>
@@ -11,4 +10,3 @@
         </div>
     </div>
 </div>
-}

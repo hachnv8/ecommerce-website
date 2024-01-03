@@ -11,7 +11,7 @@ export class ConfigService {
   URL = 'assets/dashboard.json';
 
   constructor(private http: HttpClient) { }
-  getConfig(): Observable<any> {
+  getConfig() : Observable<any> {
     return this.http.get<any>(`${this.URL}`)
   }
 }

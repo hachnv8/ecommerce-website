@@ -18,8 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      @for(data of transactions;track $index){
-      <tr>
+      <tr *ngFor="let data of transactions">
         <td>
           <div class="form-check font-size-16">
             <input class="form-check-input" type="checkbox" id="transactionCheck{{data.index}}">
@@ -46,7 +45,6 @@
             Details</button>
         </td>
       </tr>
-      }
     </tbody>
   </table>
 

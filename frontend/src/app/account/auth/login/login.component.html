@@ -28,52 +28,40 @@
             </div>
             <div class="p-2">
               <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                @if(error){
-                <alert type="danger" [dismissible]="false">{{ error }}</alert>
-                }
+
+                <alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</alert>
 
                 <div class="mb-3">
                   <label for="email">Email</label>
-                  <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                  @if(submitted && f.email.errors){
-                  <div class="invalid-feedback">
-                    @if(f.email.errors.required){
-                    <div>Email is required</div>
-                    }@if(f.email.errors.email){
-                    <div>Email must be a valid email address</div>
-                    }
+                  <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
                   </div>
-                  }
                 </div>
 
                 <div class="mb-3">
                   <label for="password">Password</label>
                   <div class="input-group auth-pass-inputgroup">
-                    <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" formControlName="password" placeholder="Enter password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Enter password"
+                      [ngClass]="{ 'is-invalid': submitted && f.password.errors }" aria-label="Password"
+                      aria-describedby="password-addon">
 
-                    <button class="btn btn-light ms-0" type="button" id="password-addon">
-                      <i class="mdi mdi-eye-outline" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType}" (click)="toggleFieldTextType()"></i></button>
-                    @if(submitted && f.password.errors){
-                    <div class="invalid-feedback">
-                      @if(f.password.errors.required){
-                      <span>Password is required</span>
-                      }
-                    </div>}
+                    <button class="btn btn-light ms-0" type="button" id="password-addon"><i
+                        class="mdi mdi-eye-outline"></i></button>
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                      <span *ngIf="f.password.errors.required">Password is required</span>
+                    </div>
                   </div>
                 </div>
 
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="remember-check">
                   <label class="form-check-label" for="remember-check">
-                    Remember me
+                      Remember me
                   </label>
-                </div>
-
-                <div id="elmLoader" class="text-center d-none">
-                  <div class="spinner-border text-primary avatar-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </div>
+              </div>
 
                 <div class="mt-3 d-grid">
                   <button class="btn btn-primary" type="submit">Log In</button>
@@ -100,7 +88,7 @@
                   </ul>
                 </div>
                 <div class="mt-4 text-center">
-                  <a routerLink="/auth/reset-password" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot
+                  <a routerLink="/account/reset-password" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot
                     your
                     password?</a>
                 </div>
@@ -110,7 +98,7 @@
           </div>
         </div>
         <div class="mt-5 text-center">
-          <p>Don't have an account ? <a routerLink="/auth/signup" class="fw-medium text-primary"> Signup
+          <p>Don't have an account ? <a routerLink="/account/signup" class="fw-medium text-primary"> Signup
               now
             </a> </p>
           <p>© {{year}} Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>

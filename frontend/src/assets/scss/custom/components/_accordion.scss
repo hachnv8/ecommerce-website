@@ -23,6 +23,7 @@
 
         .card-header {
             display: flex;
+            border-radius: 7px;
             background-color: var(--#{$prefix}tertiary-bg);
             padding: 12px 20px;
             color: var(--#{$prefix}body-color);
@@ -32,13 +33,11 @@
 
             .panel-title {
                 width: 100%;
-
                 .btn-link {
                     padding: 0;
                     font-weight: $font-weight-semibold;
                     text-decoration: none;
                     color: var(--#{$prefix}body-color);
-
                     &:focus {
                         box-shadow: none;
                     }
@@ -82,22 +81,21 @@
 
         .card-header {
             display: flex;
+            border-radius: 7px;
+            background-color: var(--#{$prefix}tertiary-bg);
             padding: 12px 20px;
             color: var(--#{$prefix}body-color);
             font-weight: $font-weight-semibold;
             align-items: center;
             justify-content: space-between;
-            border-color: var(--#{$prefix}border-color);
 
             .panel-title {
                 width: 100%;
-
                 .btn-link {
                     padding: 0;
                     font-weight: $font-weight-semibold;
                     text-decoration: none;
                     color: var(--#{$prefix}body-color);
-
                     &:focus {
                         box-shadow: none;
                     }
@@ -113,16 +111,4 @@
             }
         }
     }
-}
-
-.panel {
-    &.accordion-item {
-        &.panel-open {
-            .card-header {
-                background-color: var(--#{$prefix}tertiary-bg) !important;
-            }
-        }
-
-    }
-
 }

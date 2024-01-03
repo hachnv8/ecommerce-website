@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class SteptwoverificationComponent implements OnInit {
 
   constructor() { }
-  config: any = {
+  config:any = {
     allowNumbersOnly: true,
     length: 4,
     isPasswordInput: false,
@@ -22,6 +22,6 @@ export class SteptwoverificationComponent implements OnInit {
   ngOnInit(): void {
     document.body.classList.remove('auth-body-bg')
   }
-  // set the currenr year
-  year: number = new Date().getFullYear();
+ // set the currenr year
+ year: number = new Date().getFullYear();
 }

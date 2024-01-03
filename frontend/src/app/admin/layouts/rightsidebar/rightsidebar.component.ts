@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LayoutState, initialState } from 'src/app/store/layouts/layouts.reducer';
-import { Store } from '@ngrx/store';
-import { changeLayoutWidth, changeMode, changeSidebarMode } from 'src/app/store/layouts/layout.actions';
-import { getLayoutMode, getLayoutWidth, getsidebar } from 'src/app/store/layouts/layout.selector';
-import { RootReducerState } from 'src/app/store';
-import { changesLayout } from 'src/app/store/layouts/layout.actions';
+import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE } from '../layouts.model';
 import { EventService } from 'src/app/core/services/event.service';
-// import { RootReducerState } from 'src/app/store';
 
 @Component({
   selector: 'app-rightsidebar',
@@ -22,25 +16,19 @@ export class RightsidebarComponent implements OnInit {
 
   isVisible: string;
   attribute: string;
+
   width: string;
+  sidebartype: string;
   mode: string;
   topbar: string;
-  theme: string;
-  layoutSize: string;
-  sidebar: string;
-  initialAppState!: LayoutState;
-  constructor(private eventService: EventService, public store: Store<RootReducerState>) { }
+
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
-    this.initialAppState = initialState;
-    this.store.select('layout').subscribe((data) => {
-      this.mode = data.LAYOUT_MODE;
-      this.theme = data.DATA_LAYOUT;
-      this.topbar = data.TOPBAR_TYPE;
-      this.sidebar = data.SIDEBAR_MODE;
-      this.layoutSize = data.LAYOUT_WIDTH;
-    })
-    this.attribute = '';
+    this.width = LAYOUT_WIDTH;
+    this.sidebartype = SIDEBAR_TYPE;
+    this.topbar = TOPBAR;
+    this.mode = LAYOUT_MODE;
 
     /**
      * horizontal-vertical layput set
@@ -70,50 +58,32 @@ export class RightsidebarComponent implements OnInit {
     this.eventService.broadcast('changeTopbar', topbar);
   }
 
-  // toggle button of layout mode
-  toggleLayout() {
-    this.theme = this.theme === 'vertical' ? 'horizontal' : 'vertical';
-    this.changeLayout(this.theme);
-  }
-
   /**
    * Change the layout onclick
    * @param layout Change the layout
    */
-  changeLayout(layoutMode: string) {
-    this.theme = layoutMode;
-    this.store.dispatch(changesLayout({ layoutMode }));
-    this.store.select(getLayoutMode).subscribe((layout) => {
-      document.documentElement.setAttribute('data-layout', layout)
-    })
+  changeLayout(layout) {
+    if (layout.target.checked == true)
+      this.eventService.broadcast('changeLayout', 'vertical');
+    else
+      this.eventService.broadcast('changeLayout', 'horizontal');
   }
 
-  changeWidth(layoutWidth: any) {
-    this.store.dispatch(changeLayoutWidth({ layoutWidth }));
-    this.store.select(getLayoutWidth).subscribe((layoutWidth) => {
-      document.documentElement.setAttribute('data-layout-size', layoutWidth);
-    })
+  changeWidth(width: string) {
+    this.width = width;
+    this.eventService.broadcast('changeWidth', width);
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 0);
   }
-  // sidebar
-  changeSidebartype(sidebarMode: any) {
-    this.store.dispatch(changeSidebarMode({ sidebarMode }));
-    this.store.select(getsidebar).subscribe((sidebarMode) => {
-      document.documentElement.setAttribute('data-sidebar', sidebarMode)
-    })
+
+  changeSidebartype(sidebar: string) {
+    this.sidebartype = sidebar;
+    this.eventService.broadcast('changeSidebartype', sidebar);
   }
 
-  changeMode(mode: string) {
-    this.store.dispatch(changeMode({ mode }));
-    this.store.select(getLayoutMode).subscribe((mode) => {
-      document.documentElement.setAttribute('data-bs-theme', mode)
-    })
-    if (mode == 'light') {
-      document.documentElement.setAttribute('data-topbar', 'dark')
-    } else {
-      document.documentElement.setAttribute('data-topbar', mode)
-    }
+  changeMode(themeMode: string) {
+    this.mode = themeMode;
+    this.eventService.broadcast('changeMode', themeMode);
   }
 }

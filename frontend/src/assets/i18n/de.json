@@ -320,8 +320,7 @@
       "TEXT": "Karten",
       "LIST": {
         "GOOGLEMAP": "Google Maps",
-        "LEAFLETMAP": "Faltblatt Karten",
-        "AMCHARTS": "AmCharts"
+        "LEAFLETMAP": "Faltblatt Karten"
       }
     },
     "MULTILEVEL": {

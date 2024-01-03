@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { User, UserCredentials } from 'src/app/store/Authentication/auth.models';
-import { from, map } from 'rxjs';
+
+import { User } from '../models/auth.models';
 import { getAuthBackend } from 'src/app/authUtils';
 
-
 @Injectable({ providedIn: 'root' })
-
 export class AuthenticationService {
 
     user: User;
@@ -28,17 +26,16 @@ export class AuthenticationService {
         return getAuthBackend().getAuthenticatedToken();
     }
 
-
     /**
      * Performs the auth
      * @param email email of user
      * @param password password of user
      */
     login(email: string, password: string) {
-        return from(getAuthBackend().loginUser(email, password).pipe(map(user => {
+        return getAuthBackend().loginUser(email, password).then((response: any) => {
+            const user = response;
             return user;
-        }
-        )));
+        });
     }
 
     /**
@@ -46,12 +43,11 @@ export class AuthenticationService {
      * @param email email
      * @param password password
      */
-    register(user: UserCredentials) {
-
-        return from(getAuthBackend().registerUser(user).then((response: any) => {
+    register(email: string, password: string) {
+        return getAuthBackend().registerUser(email, password).then((response: any) => {
             const user = response;
             return user;
-        }));
+        });
     }
 
     /**

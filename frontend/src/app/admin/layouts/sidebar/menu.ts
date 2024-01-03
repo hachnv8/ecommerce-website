@@ -24,6 +24,12 @@ export const MENU: MenuItem[] = [
                 parentId: 2
             },
             {
+                id: 5,
+                label: 'MENUITEMS.DASHBOARDS.LIST.CRYPTO',
+                link: '/dashboards/crypto',
+                parentId: 2
+            },
+            {
                 id: 6,
                 label: 'MENUITEMS.DASHBOARDS.LIST.BLOG',
                 link: '/dashboards/blog',
@@ -57,7 +63,7 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.CHAT.TEXT',
         icon: 'bx-chat',
         link: '/chat',
-
+        
     },
     {
         id: 12,
@@ -121,6 +127,55 @@ export const MENU: MenuItem[] = [
         ]
     },
     {
+        id: 22,
+        label: 'MENUITEMS.CRYPTO.TEXT',
+        icon: 'bx-bitcoin',
+        subItems: [
+            {
+                id: 23,
+                label: 'MENUITEMS.CRYPTO.LIST.WALLET',
+                link: '/crypto/wallet',
+                parentId: 22
+            },
+            {
+                id: 24,
+                label: 'MENUITEMS.CRYPTO.LIST.BUY/SELL',
+                link: '/crypto/buy-sell',
+                parentId: 22
+            },
+            {
+                id: 25,
+                label: 'MENUITEMS.CRYPTO.LIST.EXCHANGE',
+                link: '/crypto/exchange',
+                parentId: 22
+            },
+            {
+                id: 26,
+                label: 'MENUITEMS.CRYPTO.LIST.LENDING',
+                link: '/crypto/lending',
+                parentId: 22
+            },
+            {
+                id: 27,
+                label: 'MENUITEMS.CRYPTO.LIST.ORDERS',
+                link: '/crypto/orders',
+                parentId: 22
+            },
+            {
+                id: 28,
+                label: 'MENUITEMS.CRYPTO.LIST.KYCAPPLICATION',
+                link: '/crypto/kyc-application',
+                parentId: 22
+            },
+            {
+                id: 29,
+                label: 'MENUITEMS.CRYPTO.LIST.ICOLANDING',
+                link: '/crypto-ico-landing',
+                parentId: 22
+            }
+        ]
+    },
+    {
         id: 30,
         label: 'MENUITEMS.EMAIL.TEXT',
         icon: 'bx-envelope',
@@ -147,22 +202,22 @@ export const MENU: MenuItem[] = [
                 parentId: 30,
                 subItems: [
                     {
-                        id: 34,
+                        id:34,
                         label: 'MENUITEMS.EMAIL.LIST.TEMPLATE.LIST.BASIC',
                         link: '/email/basic',
-                        parentId: 30
+                        parentId:30 
                     },
                     {
-                        id: 35,
+                        id:35,
                         label: 'MENUITEMS.EMAIL.LIST.TEMPLATE.LIST.ALERT',
                         link: '/email/alert',
-                        parentId: 30
+                        parentId:30
                     },
                     {
-                        id: 36,
+                        id:36,
                         label: 'MENUITEMS.EMAIL.LIST.TEMPLATE.LIST.BILLING',
                         link: '/email/billing',
-                        parentId: 30
+                        parentId:30
                     }
                 ]
             }
@@ -338,16 +393,16 @@ export const MENU: MenuItem[] = [
                 parentId: 57,
                 subItems: [
                     {
-                        id: 64,
+                        id:64,
                         label: 'MENUITEMS.JOBS.LIST.CANDIDATE.LIST.LIST',
                         link: '/jobs/candidate-list',
-                        parentId: 57
+                        parentId:57 
                     },
                     {
-                        id: 65,
+                        id:65,
                         label: 'MENUITEMS.JOBS.LIST.CANDIDATE.LIST.OVERVIEW',
                         link: '/jobs/candidate-overview',
-                        parentId: 57
+                        parentId:57
                     }
                 ]
             }
@@ -366,19 +421,37 @@ export const MENU: MenuItem[] = [
             {
                 id: 68,
                 label: 'MENUITEMS.AUTHENTICATION.LIST.LOGIN',
-                link: '/auth/login',
+                link: '/account/login',
+                parentId: 67
+            },
+            {
+                id: 69,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.LOGIN2',
+                link: '/account/login-2',
                 parentId: 67
             },
             {
                 id: 70,
                 label: 'MENUITEMS.AUTHENTICATION.LIST.REGISTER',
-                link: '/auth/signup',
+                link: '/account/signup',
+                parentId: 67
+            },
+            {
+                id: 71,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.REGISTER2',
+                link: '/account/signup-2',
                 parentId: 67
             },
             {
                 id: 72,
                 label: 'MENUITEMS.AUTHENTICATION.LIST.RECOVERPWD',
-                link: '/auth/reset-password',
+                link: '/account/reset-password',
+                parentId: 67
+            },
+            {
+                id: 73,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.RECOVERPWD2',
+                link: '/account/recoverpwd-2',
                 parentId: 67
             },
             {
@@ -388,9 +461,21 @@ export const MENU: MenuItem[] = [
                 parentId: 67
             },
             {
+                id: 75,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.LOCKSCREEN2',
+                link: '/pages/lock-screen-2',
+                parentId: 67
+            },
+            {
                 id: 76,
                 label: 'MENUITEMS.AUTHENTICATION.LIST.CONFIRMMAIL',
                 link: '/pages/confirm-mail',
+                parentId: 67
+            },
+            {
+                id: 77,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.CONFIRMMAIL2',
+                link: '/pages/confirm-mail-2',
                 parentId: 67
             },
             {
@@ -400,9 +485,21 @@ export const MENU: MenuItem[] = [
                 parentId: 67
             },
             {
+                id: 79,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.EMAILVERIFICATION2',
+                link: '/pages/email-verification-2',
+                parentId: 67
+            },
+            {
                 id: 80,
                 label: 'MENUITEMS.AUTHENTICATION.LIST.TWOSTEPVERIFICATION',
                 link: '/pages/two-step-verification',
+                parentId: 67
+            },
+            {
+                id: 81,
+                label: 'MENUITEMS.AUTHENTICATION.LIST.TWOSTEPVERIFICATION2',
+                link: '/pages/two-step-verification-2',
                 parentId: 67
             }
         ]
@@ -763,24 +860,47 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.MAPS.TEXT',
         icon: 'bx-map',
         subItems: [
-            {
-                id: 141,
-                label: 'MENUITEMS.MAPS.LIST.GOOGLEMAP',
-                link: '/maps/google',
-                parentId: 140
-            },
+            // {
+            //     id: 141,
+            //     label: 'MENUITEMS.MAPS.LIST.GOOGLEMAP',
+            //     link: '/maps/google',
+            //     parentId: 140
+            // },
             {
                 id: 142,
                 label: 'MENUITEMS.MAPS.LIST.LEAFLETMAP',
                 link: '/maps/leaflet',
                 parentId: 140
+            }
+        ]
+    },
+    {
+        id: 143,
+        label: 'MENUITEMS.MULTILEVEL.TEXT',
+        icon: 'bx-share-alt',
+        subItems: [
+            {
+                id: 144,
+                label: 'MENUITEMS.MULTILEVEL.LIST.LEVEL1.1',
+                parentId: 143
             },
             {
-                id: 142,
-                label: 'MENUITEMS.MAPS.LIST.AMCHARTS',
-                link: '/maps/AmChart',
-                parentId: 140
-            }
+                id: 145,
+                label: 'MENUITEMS.MULTILEVEL.LIST.LEVEL1.2',
+                parentId: 143,
+                subItems: [
+                    {
+                        id: 146,
+                        label: 'MENUITEMS.MULTILEVEL.LIST.LEVEL1.LEVEL2.1',
+                        parentId: 145,
+                    },
+                    {
+                        id: 147,
+                        label: 'MENUITEMS.MULTILEVEL.LIST.LEVEL1.LEVEL2.2',
+                        parentId:145,
+                    }
+                ]
+            },
         ]
     }
 ];

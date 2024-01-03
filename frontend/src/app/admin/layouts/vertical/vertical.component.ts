@@ -1,9 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { EventService } from 'src/app/core/services/event.service';
 
-
-// import { SIDEBAR_TYPE } from "../layouts.model";
 
 @Component({
   selector: 'app-vertical',
@@ -17,9 +14,9 @@ import { EventService } from 'src/app/core/services/event.service';
 export class VerticalComponent implements OnInit, AfterViewInit {
 
   isCondensed: any = false;
-  sidebartype: string;
+  // sidebartype: string;
 
-  constructor(private router: Router, private eventService: EventService) {
+  constructor(private router: Router) {
     this.router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         document.body.classList.remove('sidebar-enable');
@@ -58,4 +55,6 @@ export class VerticalComponent implements OnInit, AfterViewInit {
       document.body.classList.remove('vertical-collpsed');
     }
   }
+
+
 }

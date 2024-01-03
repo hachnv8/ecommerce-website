@@ -1,53 +1,41 @@
-import { Component, OnInit, Output, EventEmitter, Inject } from "@angular/core";
-import { Router } from "@angular/router";
-import { DOCUMENT } from "@angular/common";
-import { CookieService } from "ngx-cookie-service";
-import { TranslateService } from "@ngx-translate/core";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { changesLayout } from "src/app/store/layouts/layout.actions";
-import { getLayoutMode } from "src/app/store/layouts/layout.selector";
-import { RootReducerState } from "src/app/store";
-import { AuthenticationService } from "src/app/core/services/auth.service";
-import { LanguageService } from "src/app/core/services/language.service";
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { LanguageService } from 'src/app/core/services/language.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: "app-topbar",
-  templateUrl: "./topbar.component.html",
-  styleUrls: ["./topbar.component.scss"],
+  selector: 'app-topbar',
+  templateUrl: './topbar.component.html',
+  styleUrls: ['./topbar.component.scss']
 })
 
 /**
  * Topbar component
  */
 export class TopbarComponent implements OnInit {
-  mode: any;
+
   element: any;
   cookieValue: any;
   flagvalue: any;
   countryName: any;
   valueset: any;
-  theme: any;
-  layout: string;
-  dataLayout$: Observable<string>;
-  // Define layoutMode as a property
 
-  constructor(
-    @Inject(DOCUMENT) private document: any,
-    private router: Router,
-    private authService: AuthenticationService,
+  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
     public languageService: LanguageService,
     public translate: TranslateService,
-    public _cookiesService: CookieService,
-    public store: Store<RootReducerState>
-  ) {}
+    public _cookiesService: CookieService) {
+  }
 
   listLang: any = [
-    { text: "English", flag: "assets/images/flags/us.jpg", lang: "en" },
-    { text: "Spanish", flag: "assets/images/flags/spain.jpg", lang: "es" },
-    { text: "German", flag: "assets/images/flags/germany.jpg", lang: "de" },
-    { text: "Italian", flag: "assets/images/flags/italy.jpg", lang: "it" },
-    { text: "Russian", flag: "assets/images/flags/russia.jpg", lang: "ru" },
+    { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
+    { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
+    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
+    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
+    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
   ];
 
   openMobileMenu: boolean;
@@ -56,22 +44,16 @@ export class TopbarComponent implements OnInit {
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   ngOnInit() {
-    // this.initialAppState = initialState;
-    this.store.select("layout").subscribe((data) => {
-      this.theme = data.DATA_LAYOUT;
-    });
     this.openMobileMenu = false;
     this.element = document.documentElement;
 
-    this.cookieValue = this._cookiesService.get("lang");
-    const val = this.listLang.filter((x) => x.lang === this.cookieValue);
-    this.countryName = val.map((element) => element.text);
+    this.cookieValue = this._cookiesService.get('lang');
+    const val = this.listLang.filter(x => x.lang === this.cookieValue);
+    this.countryName = val.map(element => element.text);
     if (val.length === 0) {
-      if (this.flagvalue === undefined) {
-        this.valueset = "assets/images/flags/us.jpg";
-      }
+      if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
     } else {
-      this.flagvalue = val.map((element) => element.flag);
+      this.flagvalue = val.map(element => element.flag);
     }
   }
 
@@ -102,19 +84,17 @@ export class TopbarComponent implements OnInit {
    */
   logout() {
     this.authService.logout();
-    this.router.navigate(["/auth/login"]);
+    this.router.navigate(['/account/login']);
   }
 
   /**
    * Fullscreen method
    */
   fullscreen() {
-    document.body.classList.toggle("fullscreen-enable");
+    document.body.classList.toggle('fullscreen-enable');
     if (
-      !document.fullscreenElement &&
-      !this.element.mozFullScreenElement &&
-      !this.element.webkitFullscreenElement
-    ) {
+      !document.fullscreenElement && !this.element.mozFullScreenElement &&
+      !this.element.webkitFullscreenElement) {
       if (this.element.requestFullscreen) {
         this.element.requestFullscreen();
       } else if (this.element.mozRequestFullScreen) {
@@ -141,13 +121,5 @@ export class TopbarComponent implements OnInit {
         this.document.msExitFullscreen();
       }
     }
-  }
-
-  changeLayout(layoutMode: string) {
-    this.theme = layoutMode;
-    this.store.dispatch(changesLayout({ layoutMode }));
-    this.store.select(getLayoutMode).subscribe((layout) => {
-      document.documentElement.setAttribute("data-layout", layout);
-    });
   }
 }

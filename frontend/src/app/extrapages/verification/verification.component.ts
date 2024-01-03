@@ -12,5 +12,7 @@ export class VerificationComponent implements OnInit {
   year: number = new Date().getFullYear();
   ngOnInit(): void {
     document.body.classList.remove('auth-body-bg')
+
   }
+
 }

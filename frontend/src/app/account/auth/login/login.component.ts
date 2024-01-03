@@ -1,49 +1,52 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
-import { Store } from "@ngrx/store";
-import { login } from "src/app/store/Authentication/authentication.actions";
+import { AuthenticationService } from '../../../core/services/auth.service';
+import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+
+import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 
 /**
  * Login component
  */
 export class LoginComponent implements OnInit {
+
   loginForm: UntypedFormGroup;
   submitted: any = false;
-  error: any = "";
+  error: any = '';
   returnUrl: string;
-  fieldTextType!: boolean;
 
   // set the currenr year
   year: number = new Date().getFullYear();
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private store: Store
-  ) {}
+  // tslint:disable-next-line: max-line-length
+  constructor(private formBuilder: UntypedFormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
+    private authFackservice: AuthfakeauthenticationService) { }
 
   ngOnInit() {
-    // form validation
     this.loginForm = this.formBuilder.group({
-      email: ["vanhach@gmail.com", [Validators.required, Validators.email]],
-      password: ["123456", [Validators.required]],
+      email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
+      password: ['123456', [Validators.required]],
     });
+
+    // reset login status
+    // this.authenticationService.logout();
+    // get return url from route parameters or default to '/'
+    // tslint:disable-next-line: no-string-literal
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
-  get f() {
-    return this.loginForm.controls;
-  }
+  get f() { return this.loginForm.controls; }
 
   /**
    * Form submit
@@ -51,17 +54,16 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    const email = this.f["email"].value; // Get the username from the form
-    const password = this.f["password"].value; // Get the password from the form
-
-    // Login Api
-    this.store.dispatch(login({ email: email, password: password }));
-  }
-
-  /**
-   * Password Hide/Show
-   */
-  toggleFieldTextType() {
-    this.fieldTextType = !this.fieldTextType;
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    } else {
+      this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
+        this.router.navigate(['/dashboard']);
+      })
+        .catch(error => {
+          this.error = error ? error : '';
+        });
+    }
   }
 }

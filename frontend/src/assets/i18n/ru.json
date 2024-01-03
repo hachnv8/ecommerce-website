@@ -318,8 +318,7 @@
       "TEXT": "Карты",
       "LIST": {
         "GOOGLEMAP": "Карты Гугл",
-        "LEAFLETMAP": "Листовки Карты",
-        "AMCHARTS": "AmCharts"
+        "LEAFLETMAP": "Листовки Карты"
       }
     },
     "MULTILEVEL": {

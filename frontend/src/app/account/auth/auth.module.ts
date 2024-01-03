@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AlertModule } from 'ngx-bootstrap/alert';
-// Swiper Slider
-import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
 import { UIModule } from '../../shared/ui/ui.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-
 import { AuthRoutingModule } from './auth-routing';
 import { PasswordresetComponent } from './passwordreset/passwordreset.component';
 
@@ -21,7 +20,7 @@ import { PasswordresetComponent } from './passwordreset/passwordreset.component'
     AlertModule.forRoot(),
     UIModule,
     AuthRoutingModule,
-    SlickCarouselModule
+    CarouselModule
   ]
 })
 export class AuthModule { }
