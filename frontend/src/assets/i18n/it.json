@@ -43,7 +43,7 @@
       "ECOMMERCE": "Ecommerce",
       "CALENDAR": "Calendario",
       "EMAIL": "Email",
-      "PROJECTS": "Progetti",
+      "CATEGORIES": "Progetti",
       "TASKS": "Compiti",
       "CONTACTS": "Contatti"
     },
@@ -77,7 +77,7 @@
         "SAAS": "Saas",
         "CRYPTO": "Crypto",
         "BLOG": "Blog",
-        "JOBS": "Lavori"
+        "PRODUCTS": "Lavori"
       }
     },
     "LAYOUTS": {
@@ -157,7 +157,7 @@
         "INVOICEDETAIL": "Dettaglio fattura"
       }
     },
-    "PROJECTS": {
+    "CATEGORIES": {
       "TEXT": "progetti",
       "LIST": {
         "GRID": "Griglia dei progetti",
@@ -191,7 +191,7 @@
         "DETAIL": "Dettagli del blog"
       }
     },
-    "JOBS": {
+    "PRODUCTS": {
       "TEXT": "Lavori",
       "BADGE": "Nuova",
       "LIST": {

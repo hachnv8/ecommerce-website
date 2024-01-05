@@ -37,6 +37,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorDetails> resolveException(BadCredentialsException exception, WebRequest webRequest) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                webRequest.getDescription(false),
+                "BAD REQUEST"
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<ErrorDetails> handleTokenExpiredException(TokenExpiredException exception, WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(

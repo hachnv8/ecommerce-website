@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 
+import { getFirebaseBackend } from '../../authUtils';
 
 import { User } from '../models/auth.models';
-import { getAuthBackend } from 'src/app/authUtils';
 
 @Injectable({ providedIn: 'root' })
+
 export class AuthenticationService {
 
     user: User;
@@ -16,14 +17,7 @@ export class AuthenticationService {
      * Returns the current user
      */
     public currentUser(): User {
-        return getAuthBackend().getAuthenticatedUser();
-    }
-
-    /**
-     * Returns the current token
-     */
-    public currentToken(): String {
-        return getAuthBackend().getAuthenticatedToken();
+        return getFirebaseBackend().getAuthenticatedUser();
     }
 
     /**
@@ -32,7 +26,7 @@ export class AuthenticationService {
      * @param password password of user
      */
     login(email: string, password: string) {
-        return getAuthBackend().loginUser(email, password).then((response: any) => {
+        return getFirebaseBackend().loginUser(email, password).then((response: any) => {
             const user = response;
             return user;
         });
@@ -44,7 +38,7 @@ export class AuthenticationService {
      * @param password password
      */
     register(email: string, password: string) {
-        return getAuthBackend().registerUser(email, password).then((response: any) => {
+        return getFirebaseBackend().registerUser(email, password).then((response: any) => {
             const user = response;
             return user;
         });
@@ -55,7 +49,7 @@ export class AuthenticationService {
      * @param email email
      */
     resetPassword(email: string) {
-        return getAuthBackend().forgetPassword(email).then((response: any) => {
+        return getFirebaseBackend().forgetPassword(email).then((response: any) => {
             const message = response.data;
             return message;
         });
@@ -66,7 +60,7 @@ export class AuthenticationService {
      */
     logout() {
         // logout the user
-        getAuthBackend().logout();
+        getFirebaseBackend().logout();
     }
 }
 

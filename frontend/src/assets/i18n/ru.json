@@ -43,7 +43,7 @@
       "ECOMMERCE": "Электронная коммерция",
       "CALENDAR": "Календарь",
       "EMAIL": "Эл. адрес",
-      "PROJECTS": "Проекты",
+      "CATEGORIES": "Проекты",
       "TASKS": "Задачи",
       "CONTACTS": "Контакты"
     },
@@ -77,7 +77,7 @@
         "SAAS": "Saas",
         "CRYPTO": "крипто-",
         "BLOG": "Блог",
-        "JOBS": "Работа"
+        "PRODUCTS": "Работа"
       }
     },
     "LAYOUTS": {
@@ -157,7 +157,7 @@
         "INVOICEDETAIL": "Деталь счета"
       }
     },
-    "PROJECTS": {
+    "CATEGORIES": {
       "TEXT": "проектов",
       "LIST": {
         "GRID": "Сетка проектов",
@@ -191,7 +191,7 @@
         "DETAIL": "Подробности блога"
       }
     },
-    "JOBS": {
+    "PRODUCTS": {
       "TEXT": "Работа",
       "BADGE": "Новый",
       "LIST": {

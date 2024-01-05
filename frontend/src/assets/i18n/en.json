@@ -43,7 +43,7 @@
       "ECOMMERCE": "Ecommerce",
       "CALENDAR": "Calendar",
       "EMAIL": "Email",
-      "PROJECTS": "Projects",
+      "CATEGORIES": "Categories",
       "TASKS": "Tasks",
       "CONTACTS": "Contacts"
     },
@@ -77,7 +77,7 @@
         "SAAS": "Saas",
         "CRYPTO": "Crypto",
         "BLOG": "Blog",
-        "JOBS": "Jobs"
+        "PRODUCTS": "Products"
       }
     },
     "LAYOUTS": {
@@ -157,12 +157,12 @@
         "INVOICEDETAIL": "Invoice Detail"
       }
     },
-    "PROJECTS": {
-      "TEXT": "Projects",
+    "CATEGORIES": {
+      "TEXT": "Categories",
       "LIST": {
-        "GRID": "Projects Grid",
-        "PROJECTLIST": "Projects List",
-        "OVERVIEW": "Project Overview",
+        "GRID": "Category Grid",
+        "CATEGORYLIST": "Category List",
+        "OVERVIEW": "Category Overview",
         "CREATE": "Create New"
       }
     },
@@ -191,15 +191,15 @@
         "DETAIL": "Blog Details"
       }
     },
-    "JOBS": {
-      "TEXT": "Jobs",
+    "PRODUCTS": {
+      "TEXT": "Products",
       "BADGE": "New",
       "LIST": {
-        "JOBLIST": "Job List",
-        "JOBGRID": "Job Grid",
-        "APPLYJOB": "Apply Job",
-        "JOBDETAILS": "Job Details",
-        "JOBCATEGORIES": "Jobs Categories",
+        "PRODUCTLIST": "Product List",
+        "PRODUCTGRID": "Product Grid",
+        "APPLYPRODUCT": "Apply Product",
+        "PRODUCTDETAILS": "Product Details",
+        "PRODUCTCATEGORIES": "Products Categories",
         "CANDIDATE": {
           "TEXT": "Candidate",
           "LIST": {

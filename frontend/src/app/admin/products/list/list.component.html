@@ -1,14 +1,14 @@
 <div class="container-fluid">
-  <app-page-title title="Jobs List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <app-page-title title="Product List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
   <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-body border-bottom">
           <div class="d-flex align-items-center">
-            <h5 class="mb-0 card-title flex-grow-1">Jobs Lists</h5>
+            <h5 class="mb-0 card-title flex-grow-1">Product List</h5>
             <div class="flex-shrink-0 d-flex gap-1">
-              <a href="javascript:void(0);" class="btn btn-primary" (click)="openModal(content)">Add New Job</a>
+              <a href="javascript:void(0);" class="btn btn-primary" (click)="openModal(content)">Add New Product</a>
               <a href="javascript:void(0);" class="btn btn-light"><i class="mdi mdi-refresh"></i></a>
               <div class="dropdown d-inline-block" dropdown>
                 <button type="menu" class="btn btn-success" id="*dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" dropdownToggle><i class="mdi mdi-dots-vertical"></i></button>
@@ -57,11 +57,11 @@
         <div class="card-body">
 
           <div class="table-responsive">
-            <table class="table align-middle dt-responsive nowrap w-100 table-check" id="job-list">
+            <table class="table align-middle dt-responsive nowrap w-100 table-check" id="product-list">
               <thead>
                 <tr>
                   <th scope="col">No</th>
-                  <th scope="col">Job Title</th>
+                  <th scope="col">Product Title</th>
                   <th scope="col">Company Name</th>
                   <th scope="col">Location</th>
                   <th scope="col">Experience</th>
@@ -88,7 +88,7 @@
                   <td>
                     <ul class="list-unstyled hstack gap-1 mb-0">
                       <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                        <a routerLink="/jobs/details" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                        <a routerLink="/admin/products/details" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                       </li>
                       <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                         <a href="javascript:void(0);" class="btn btn-sm btn-soft-info" (click)="editDataGet(data.id,content)"><i class="mdi mdi-pencil-outline"></i></a>
@@ -205,17 +205,17 @@
 <!-- Order Create Model -->
 <ng-template #content role="document" let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Add Jobs</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Add Products</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modalRef?.hide()"></button>
   </div>
   <form (ngSubmit)="saveUser()" [formGroup]="jobListForm">
     <div class="modal-body">
       <input type="hidden" name="id" value="" formControlName="ids" />
       <div class="mb-3">
-        <label for="customername-field" class="form-label">Jobs Title</label>
+        <label for="customername-field" class="form-label">Products Title</label>
         <input type="text" id="customername-field" class="form-control" placeholder="Enter Name" required formControlName="title" [ngClass]="{ 'is-invalid': submitted && form['title'].errors }" />
         <div *ngIf="submitted && form['title'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['title'].errors['required']">Jobs Title is required</div>
+          <div *ngIf="form['title'].errors['required']">Products Title is required</div>
         </div>
       </div>
 

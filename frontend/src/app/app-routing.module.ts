@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { Page404Component } from './extrapages/page404/page404.component';
 import { LayoutComponent } from './admin/layouts/layout.component';
-
 const routes: Routes = [
   {
     path: "admin",
@@ -16,7 +15,7 @@ const routes: Routes = [
   {
     path: "auth",
     loadChildren: () =>
-      import("./account/account.module").then((m) => m.AccountModule),
+      import("./auth/auth.module").then((m) => m.AuthModule),
   },
   {
     path: "",

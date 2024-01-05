@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { LanguageService } from 'src/app/core/services/language.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-topbar',
@@ -24,7 +24,7 @@ export class TopbarComponent implements OnInit {
   countryName: any;
   valueset: any;
 
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
+  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthService,
     public languageService: LanguageService,
     public translate: TranslateService,
     public _cookiesService: CookieService) {
@@ -84,7 +84,7 @@ export class TopbarComponent implements OnInit {
    */
   logout() {
     this.authService.logout();
-    this.router.navigate(['/account/login']);
+    //this.router.navigate(['/auth/login']);
   }
 
   /**

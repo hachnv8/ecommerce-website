@@ -6,7 +6,8 @@ import { ListComponent } from "./list/list.component";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "list"
+    redirectTo: "list",
+    pathMatch: "full"
   },
   {
     path: "list",

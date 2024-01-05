@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-vertical',
   templateUrl: './vertical.component.html',
@@ -13,7 +14,7 @@ import { Router, NavigationEnd } from '@angular/router';
  */
 export class VerticalComponent implements OnInit, AfterViewInit {
 
-  isCondensed: any = false;
+  isCondensed:any = false;
   // sidebartype: string;
 
   constructor(private router: Router) {

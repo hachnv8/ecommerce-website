@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 
 import {
-  LAYOUT_VERTICAL, LAYOUT_WIDTH, TOPBAR, LAYOUT_MODE, SIDEBAR_TYPE
+  LAYOUT_VERTICAL, LAYOUT_HORIZONTAL, LAYOUT_WIDTH, TOPBAR, LAYOUT_MODE, SIDEBAR_TYPE
 } from './layouts.model';
 import { EventService } from 'src/app/core/services/event.service';
 
@@ -30,13 +30,6 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     this.topbar = TOPBAR;
     this.mode = LAYOUT_MODE;
     this.sidebartype = SIDEBAR_TYPE;
-
-    // document.body.setAttribute('data-bs-theme', this.mode);
-
-    // listen to event and change the layout, theme, etc
-    this.eventService.subscribe('changeLayout', (layout) => {
-      this.layoutType = layout;
-    });
 
     this.LayoutWidth(this.layoutwidth);
 
@@ -155,5 +148,12 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         document.body.setAttribute("data-layout-size", "fluid");
         break;
     }
+  }
+
+  /**
+   * Check if the vertical layout is requested
+   */
+  isVerticalLayoutRequested() {
+    return this.layoutType === LAYOUT_VERTICAL;
   }
 }

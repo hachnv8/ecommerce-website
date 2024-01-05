@@ -2,10 +2,12 @@ import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChang
 import MetisMenu from 'metismenujs';
 import { Router, NavigationEnd } from '@angular/router';
 
+import { HttpClient } from '@angular/common/http';
 
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
+import { EventService } from 'src/app/core/services/event.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +28,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
-  constructor(router: Router, public translate: TranslateService) {
+  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
@@ -63,9 +65,9 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       if (document.getElementsByClassName("mm-active").length > 0) {
         const currentPosition = document.getElementsByClassName("mm-active")[0]['offsetTop'];
         if (currentPosition > 500)
-          if (this.scrollRef.SimpleBar !== null)
-            this.scrollRef.SimpleBar.getScrollElement().scrollTop =
-              currentPosition + 300;
+        if(this.scrollRef.SimpleBar !== null)
+          this.scrollRef.SimpleBar.getScrollElement().scrollTop =
+            currentPosition + 300;
       }
     }, 300);
   }

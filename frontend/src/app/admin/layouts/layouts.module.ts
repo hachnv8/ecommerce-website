@@ -13,6 +13,7 @@ import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
 import { VerticalComponent } from './vertical/vertical.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/core/services/language.service';
+import { UIModule } from 'src/app/shared/ui/ui.module';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -22,6 +23,7 @@ import { LanguageService } from 'src/app/core/services/language.service';
     TranslateModule,
     RouterModule,
     BsDropdownModule.forRoot(),
+    UIModule,
     SimplebarAngularModule
   ],
   providers: [LanguageService]

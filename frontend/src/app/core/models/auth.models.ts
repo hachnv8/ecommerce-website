@@ -1,21 +1,9 @@
 export class User {
-    id?: number;
-    name: string;
-    username: string;
-    email?: string;
-    dateOfBirth?: Date;
-    address?: string;
-    phoneNumber?: string;
-    role?: string;
-  }
-  
-  export class UserToken {
-    user: User;
-    token: string;
-  }
-  
-  export class UserCredentials {
-    email: string;
+    id: number;
     username: string;
     password: string;
-  }
+    firstName?: string;
+    lastName?: string;
+    token?: string;
+    email: string;
+}
