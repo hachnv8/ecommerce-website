@@ -13,7 +13,7 @@ export class AuthService {
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient, localstoreService: LocalStoreService) {
-        this.currentUserSubject = new BehaviorSubject<User>(localstoreService.getUserData);
+        this.currentUserSubject = new BehaviorSubject<User>(localstoreService.userData);
         this.currentUser = this.currentUserSubject.asObservable();
     }
 

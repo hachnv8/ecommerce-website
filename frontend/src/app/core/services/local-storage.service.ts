@@ -13,11 +13,11 @@ export class LocalStoreService {
   private userSubject = new Subject<any>();
   constructor() { }
 
-  get getToken() {
+  get token() {
     return localStorage.getItem('token');
   }
 
-  get getUserData() {
+  get userData() {
     return this.get('user');
   }
 
