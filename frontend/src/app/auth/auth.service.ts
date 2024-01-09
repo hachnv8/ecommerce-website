@@ -3,10 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../core/models/auth.models';
 import { environment } from 'src/environments/environment';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { LocalStoreService } from '../core/services/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,8 +12,8 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-    constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    constructor(private http: HttpClient, localstoreService: LocalStoreService) {
+        this.currentUserSubject = new BehaviorSubject<User>(localstoreService.getUserData);
         this.currentUser = this.currentUserSubject.asObservable();
     }
 

@@ -11,6 +11,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AuthRoutingModule } from './auth-routing';
 import { PasswordresetComponent } from './passwordreset/passwordreset.component';
 import { UIModule } from '../shared/ui/ui.module';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [LoginComponent, SignupComponent, PasswordresetComponent],
@@ -22,6 +23,7 @@ import { UIModule } from '../shared/ui/ui.module';
     UIModule,
     AuthRoutingModule,
     CarouselModule
-  ]
+  ],
+  providers: [AuthService]
 })
 export class AuthModule { }

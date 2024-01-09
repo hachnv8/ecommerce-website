@@ -17,7 +17,7 @@ export class LocalStoreService {
     return localStorage.getItem('token');
   }
 
-  get userData() {
+  get getUserData() {
     return this.get('user');
   }
 
@@ -31,14 +31,6 @@ export class LocalStoreService {
       localStorage.setItem('user', JSON.stringify(data.user));
       this.userSubject.next(data.user);
     }
-  }
-
-  get user() {
-    return this.userData && this.userData;
-  }
-
-  get consumerId(): string {
-    return this.user && this.user.consumer._id;
   }
 
   remove(key: string) {

@@ -48,6 +48,7 @@
     "firebase": "^10.0.0",
     "flatpickr": "^4.6.13",
     "leaflet": "^1.9.4",
+    "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",
     "metismenujs": "^1.4.0",
     "ng-apexcharts": "^1.7.7",
@@ -98,7 +99,7 @@
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
-    "protractor": "^3.3.0",
+    "protractor": "^7.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }

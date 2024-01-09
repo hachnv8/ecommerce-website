@@ -84,7 +84,7 @@ class FirebaseAuthBackend {
         if (!sessionStorage.getItem('authUser')) {
             return null;
         }
-        return JSON.parse(sessionStorage.getItem('authUser'));
+        return sessionStorage.getItem('authUser');
     }
 
     /**

@@ -27,17 +27,17 @@ export class CategoryService extends AbstractService {
   deleteCategory(categoryId: number): Observable<string> {
     return this.http.delete<string>(`${environment.apiUrl}/categories/${categoryId}`);
   }
-  updateCategory(
-    id: number,
-    updatedCategory: UpdateCategoryDTO
-  ): Observable<UpdateCategoryDTO> {
-    return this.http.put<Category>(
-      `${environment.apiUrl}/categories/${id}`,
-      updatedCategory
-    );
-  }
-  insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<any> {
-    // Add a new category
-    return this.http.post(`${environment.apiUrl}/categories`, insertCategoryDTO);
-  }
+  // updateCategory(
+  //   id: number,
+  //   updatedCategory: UpdateCategoryDTO
+  // ): Observable<UpdateCategoryDTO> {
+  //   return this.http.put<Category>(
+  //     `${environment.apiUrl}/categories/${id}`,
+  //     updatedCategory
+  //   );
+  // }
+  // insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<any> {
+  //   // Add a new category
+  //   return this.http.post(`${environment.apiUrl}/categories`, insertCategoryDTO);
+  // }
 }

@@ -19,6 +19,8 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { RequestInterceptor } from './core/helpers/request.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { LayoutsModule } from './admin/layouts/layouts.module';
+import { CoreModule } from './core/core.module';
+import { AdminModule } from './admin/admin.module';
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -42,6 +44,8 @@ export function createTranslateLoader(http: HttpClient): any {
     LayoutsModule,
     AppRoutingModule,
     CarouselModule,
+    CoreModule,
+    AdminModule,
     AccordionModule.forRoot(),
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
