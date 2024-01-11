@@ -1,9 +1,9 @@
 export class IPaginationResult {
-  docs: any[];
-  limit: number;
-  page: number;
-  pages: number;
-  total: number;
+  content: any[];
+  size: number;
+  number: number;
+  totalElements: number;
+  totalPages: number;
 }
 
 // tslint:disable-next-line:max-classes-per-file

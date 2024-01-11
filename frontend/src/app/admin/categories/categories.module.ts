@@ -17,10 +17,10 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { ListComponent } from './list/list.component';
 import { OverviewComponent } from './overview/overview.component';
-import { CreateComponent } from './create/create.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [ListComponent, OverviewComponent, CreateComponent],
+  declarations: [ListComponent, OverviewComponent],
   imports: [
     CommonModule,
     CategoriesRoutingModule,
@@ -32,7 +32,8 @@ import { CreateComponent } from './create/create.component';
     FormsModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot()
-  ]
+  ],
+  providers: [BsModalService]
 })
 
 export class CategoriesModule { }

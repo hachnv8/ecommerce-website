@@ -19,7 +19,7 @@ export class CategoryService extends AbstractService {
   }
 
   getCategories(params: IPaginationInputV2 = {}): Observable<IPaginationResult> {
-    return this.http.get<IPaginationResult>(`${environment.apiUrl}admin/categories`, { params: this.toHttpParams(params) });
+    return this.http.get<IPaginationResult>(`${environment.apiUrl}/admin/categories`, { params: this.toHttpParams(params) });
   }
   getCategoryById(categoryId: number): Observable<Category> { 
     return this.http.get<Category>(`${environment.apiUrl}/categories/${categoryId}`);
